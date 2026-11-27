@@ -11,10 +11,10 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 cp .env.example .env        # local config; the defaults use SQLite, so no database server is needed
 flask db upgrade && flask seed-demo
-flask run
+flask run --port 5001
 ```
 
- You should be able to run `flask run`, log in as a demo user and run `pytest` with every test passing.
+You should be able to open `http://127.0.0.1:5001`, log in as a demo user and run `pytest` with every test passing.
 
 ## 2. Pick something
 
