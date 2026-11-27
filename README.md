@@ -35,10 +35,18 @@ cp .env.example .env                # create your local config (defaults use SQL
 
 flask db upgrade                    # create the database from migrations
 flask seed-demo                     # optional: demo companies, users, internships
-flask run                           # http://127.0.0.1:5000
+flask run --port 5001               # http://127.0.0.1:5001
 ```
 
 The SQLite file is created at `instance/usms.db`.
+
+### Troubleshooting: port 5000 on macOS
+
+AirPlay Receiver can occupy port 5000 on macOS. If Flask cannot bind to that
+port, or the browser shows `403 Forbidden` instead of USMS, use port 5001 as
+shown above. Alternatively, turn off AirPlay Receiver in System Settings
+(search for "AirPlay Receiver"), then run Flask on its default port 5000.
+This is only needed for local development.
 
 ### Demo accounts (after `flask seed-demo`)
 
