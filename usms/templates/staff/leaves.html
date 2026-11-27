@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% from "_macros.html" import leave_table %}{% block title %}Leave requests{% endblock %}
+{% block content %}
+<h1>Leave requests</h1>
+<p class="row">{% for s in ['pending', 'approved', 'denied', 'all'] %}<a href="{{ url_for('staff.leaves', status=s) }}" {% if s == status %}style="font-weight:700"{% endif %}>{{ s|capitalize }}</a>{% endfor %}</p>
+{{ leave_table(requests, show_student=true, can_review=current_user.role in (Role.ADMIN, Role.HR)) }}
+{% endblock %}

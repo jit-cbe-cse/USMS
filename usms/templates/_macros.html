@@ -1,0 +1,38 @@
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro internship_table(internships, show_student=false) %}
+<table>
+  <tr>{% if show_student %}<th>Student</th>{% endif %}<th>Company</th><th>Role</th><th>Start</th><th>End</th><th>Days</th><th>Status</th></tr>
+  {% for i in internships %}
+  <tr>
+    {% if show_student %}<td><a href="{{ url_for('staff.student_detail', student_id=i.student_id) }}">{{ i.student.name }}</a></td>{% endif %}
+    <td>{{ i.company.name }}</td><td>{{ i.title }}</td><td>{{ i.start_date }}</td>
+    <td>{{ i.end_date or '—' }}</td><td>{{ i.duration_days }}</td>
+    <td><span class="badge {{ i.status }}">{{ i.status }}</span></td>
+  </tr>
+  {% else %}<tr><td colspan="7" class="muted">No internships.</td></tr>{% endfor %}
+</table>
+{% endmacro %}
+
+{% macro leave_table(requests, show_student=false, can_review=false) %}
+<table>
+  <tr>{% if show_student %}<th>Student</th><th>Company</th>{% endif %}<th>From</th><th>To</th><th>Days</th><th>Reason</th><th>Status</th>{% if can_review %}<th></th>{% endif %}</tr>
+  {% for r in requests %}
+  <tr>
+    {% if show_student %}<td><a href="{{ url_for('staff.student_detail', student_id=r.internship.student_id) }}">{{ r.internship.student.name }}</a></td><td>{{ r.internship.company.name }}</td>{% endif %}
+    <td>{{ r.start_date }}</td><td>{{ r.end_date }}</td><td>{{ r.days }}</td><td>{{ r.reason }}</td>
+    <td><span class="badge {{ r.status }}">{{ r.status }}</span>
+      {% if r.reviewed_by %}<div class="muted">by {{ r.reviewed_by.name }}{% if r.review_note %}: {{ r.review_note }}{% endif %}</div>{% endif %}</td>
+    {% if can_review %}<td>
+      {% if r.status == 'pending' %}
+      <form class="row" method="post" action="{{ url_for('staff.review_leave', leave_id=r.id, decision='approve') }}">
+        {{ csrf() }}<input name="note" placeholder="Note (optional)">
+        <button>Approve</button>
+        <button class="danger" formaction="{{ url_for('staff.review_leave', leave_id=r.id, decision='deny') }}">Deny</button>
+      </form>
+      {% endif %}
+    </td>{% endif %}
+  </tr>
+  {% else %}<tr><td colspan="8" class="muted">No leave requests.</td></tr>{% endfor %}
+</table>
+{% endmacro %}

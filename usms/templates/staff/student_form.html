@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% from "_macros.html" import csrf %}{% block title %}Add student{% endblock %}
+{% block content %}
+<h1>Add student</h1>
+<p class="muted">If the email already belongs to a student, their existing account is reused and only the internship is added.</p>
+<form class="stack card" method="post">{{ csrf() }}
+  <label>Email <input type="email" name="email" value="{{ request.form.email }}" required></label>
+  <label>Full name (new students) <input name="name" value="{{ request.form.name }}"></label>
+  <label>Roll number (new students) <input name="roll_number" value="{{ request.form.roll_number }}"></label>
+  <label>Initial password (new students, min 8 chars) <input type="password" name="password" minlength="8"></label>
+  <h2>Internship {% if current_user.role != Role.HR %}<span class="muted">(optional)</span>{% endif %}</h2>
+  {% if current_user.role == Role.HR %}
+    <p>Company: <b>{{ current_user.company.name if current_user.company else 'none assigned, ask an admin' }}</b></p>
+  {% else %}
+    <label>Company <select name="company_id"><option value="">— none —</option>{% for c in companies %}<option value="{{ c.id }}">{{ c.name }}</option>{% endfor %}</select></label>
+  {% endif %}
+  <label>Role / title <input name="title" placeholder="Intern" value="{{ request.form.title }}"></label>
+  <label>Start date <input type="date" name="start_date" value="{{ request.form.start_date }}"></label>
+  <label>End date (leave empty if open-ended) <input type="date" name="end_date" value="{{ request.form.end_date }}"></label>
+  <button>Save</button>
+</form>
+{% endblock %}

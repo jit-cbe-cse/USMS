@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% from "_macros.html" import internship_table %}{% block title %}Home{% endblock %}
+{% block content %}
+<h1>{{ current_user.company.name if current_user.company else 'All companies' }}</h1>
+<div class="grid">
+  <div class="card stat"><b>{{ current|length }}</b><span>Current interns</span></div>
+  <a class="card stat" href="{{ url_for('staff.leaves') }}"><b>{{ pending }}</b><span>Pending leave requests</span></a>
+</div>
+<div class="row" style="justify-content:space-between"><h2>Current interns</h2><a class="btn" href="{{ url_for('staff.add_student') }}">Add student</a></div>
+{{ internship_table(current, show_student=true) }}
+<h2>Latest logs</h2>
+<table>
+  <tr><th>Date</th><th>Student</th><th>Company</th><th>Title</th></tr>
+  {% for l in recent_logs %}
+  <tr><td>{{ l.log_date }}</td><td><a href="{{ url_for('staff.student_detail', student_id=l.internship.student_id) }}">{{ l.internship.student.name }}</a></td>
+      <td>{{ l.internship.company.name }}</td><td>{{ l.title }}</td></tr>
+  {% else %}<tr><td colspan="4" class="muted">No logs yet.</td></tr>{% endfor %}
+</table>
+{% endblock %}

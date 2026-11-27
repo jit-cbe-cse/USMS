@@ -1,0 +1,32 @@
+# Production-like stack: USMS + MySQL 8.
+#   docker compose up --build
+#   docker compose exec web flask create-admin
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: usms
+      MYSQL_USER: usms
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-usms_password}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-change-me}
+      DATABASE_URL: mysql+pymysql://usms:${MYSQL_PASSWORD:-usms_password}@db:3306/usms?charset=utf8mb4
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

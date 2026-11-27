@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% from "_macros.html" import csrf %}{% block title %}{{ 'Edit' if entry else 'New' }} log{% endblock %}
+{% block content %}
+<h1>{{ 'Edit' if entry else 'New' }} log</h1>
+<form class="stack card" method="post" style="max-width:760px">{{ csrf() }}
+  <label>Date <input type="date" name="log_date" max="{{ today }}" value="{{ request.form.log_date or (entry.log_date if entry else today) }}" required></label>
+  <label>Title <input name="title" value="{{ request.form.title or (entry.title if entry else '') }}" required></label>
+  <label>What did you work on? <textarea name="body" required>{{ request.form.body or (entry.body if entry else '') }}</textarea></label>
+  <button>Save log</button>
+</form>
+{% endblock %}

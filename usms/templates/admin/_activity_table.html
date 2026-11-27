@@ -1,0 +1,7 @@
+<table>
+  <tr><th>When (UTC)</th><th>User</th><th>Action</th><th>Details</th><th>IP</th></tr>
+  {% for a in recent %}
+  <tr><td>{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</td><td>{{ a.user.email if a.user else '—' }}</td>
+      <td>{{ a.action }}</td><td>{{ a.details }}</td><td class="muted">{{ a.ip_address or '' }}</td></tr>
+  {% else %}<tr><td colspan="5" class="muted">No activity yet.</td></tr>{% endfor %}
+</table>
