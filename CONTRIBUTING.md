@@ -11,7 +11,7 @@ git clone https://github.com/YOUR_USERNAME/USMS.git
 cd USMS
 ```
 
-## 3. Set up
+## 2. Set up
 
 Follow **Quick start** in the [README](README.md). The key steps are:
 
