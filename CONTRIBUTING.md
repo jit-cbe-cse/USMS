@@ -2,7 +2,16 @@
 
 Thanks for helping! This guide gets you from zero to an open pull request.
 
-## 1. Set up
+## 0. Fork the repository
+
+## 1. Clone your fork:
+
+``` bash
+git clone https://github.com/YOUR_USERNAME/USMS.git
+cd USMS
+```
+
+## 3. Set up
 
 Follow **Quick start** in the [README](README.md). The key steps are:
 
@@ -16,13 +25,13 @@ flask run --port 5001
 
 You should be able to open `http://127.0.0.1:5001`, log in as a demo user and run `pytest` with every test passing.
 
-## 2. Pick something
+## 3. Pick something
 
 - Browse issues labelled `good first issue` or `help wanted`.
 - Larger features are listed in [docs/ROADMAP.md](docs/ROADMAP.md). Please open an issue to discuss the design before starting one.
 - Comment on the issue so nobody duplicates your work.
 
-## 3. Branch and code
+## 4. Branch and code
 
 ```bash
 git checkout -b feature/short-description   # or fix/..., docs/...
@@ -40,7 +49,7 @@ Guidelines:
 - Keep the UI simple: server-rendered Jinja and `static/style.css`, no JS build step.
 - Follow PEP 8 and keep lines under 120 characters.
 
-## 4. Test
+## 5. Test
 
 Add tests in `tests/` for new behaviour, especially permission rules: test both who *can* and who *cannot* do something.
 
@@ -48,7 +57,7 @@ Add tests in `tests/` for new behaviour, especially permission rules: test both 
 pytest
 ```
 
-## 5. Commit and open a PR
+## 6. Commit and open a PR
 
 - Write clear commit messages ("Add document request model and HR view").
 - Open the PR against `main` and describe what changed, why, and how you tested it. Include screenshots for UI changes.
