@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}USMS{% endblock %} · Unified Students Management System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="{{ url_for('index') }}">USMS</a>
+    {% if current_user.is_authenticated %}
+    <nav>
+      {% if current_user.role == Role.STUDENT %}
+        <a href="{{ url_for('student.dashboard') }}">Home</a>
+        <a href="{{ url_for('student.logs') }}">My logs</a>
+        <a href="{{ url_for('student.leave') }}">Leave</a>
+        <a href="{{ url_for('student.history') }}">History</a>
+      {% else %}
+        {% if current_user.role == Role.ADMIN %}
+          <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+          <a href="{{ url_for('admin.companies') }}">Companies</a>
+          <a href="{{ url_for('admin.users') }}">Users</a>
+          <a href="{{ url_for('admin.activity') }}">Activity</a>
+        {% else %}
+          <a href="{{ url_for('staff.dashboard') }}">Home</a>
+        {% endif %}
+        <a href="{{ url_for('staff.students') }}">Students</a>
+        <a href="{{ url_for('staff.leaves') }}">Leave requests</a>
+      {% endif %}
+    </nav>
+    <div class="who">
+      <span>{{ current_user.name }} · {{ current_user.role_label }}{% if current_user.company %} · {{ current_user.company.name }}{% endif %}</span>
+      <a href="{{ url_for('auth.change_password') }}">Password</a>
+      <form class="inline" method="post" action="{{ url_for('auth.logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="link">Log out</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</header>
+<main class="wrap">
+  {% for category, message in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ category }}">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>

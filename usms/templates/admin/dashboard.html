@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Admin{% endblock %}
+{% block content %}
+<h1>Admin dashboard</h1>
+<div class="grid">{% for label, n in stats.items() %}<div class="card stat"><b>{{ n }}</b><span>{{ label }}</span></div>{% endfor %}</div>
+<h2>Recent activity</h2>
+{% include "admin/_activity_table.html" %}
+<p><a href="{{ url_for('admin.activity') }}">All activity →</a></p>
+{% endblock %}

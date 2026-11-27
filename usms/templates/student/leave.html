@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% from "_macros.html" import csrf, leave_table %}{% block title %}Leave{% endblock %}
+{% block content %}
+<h1>Leave requests</h1>
+{{ leave_table(requests) }}
+<h2>Request leave</h2>
+<form class="stack card" method="post">{{ csrf() }}
+  <label>From <input type="date" name="start_date" required></label>
+  <label>To <input type="date" name="end_date" required></label>
+  <label>Reason <textarea name="reason" style="min-height:80px" required></textarea></label>
+  <button>Submit request</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Students{% endblock %}
+{% block content %}
+<div class="row" style="justify-content:space-between"><h1>Students</h1><a class="btn" href="{{ url_for('staff.add_student') }}">Add student</a></div>
+<form class="row" method="get" style="margin-bottom:1rem"><input name="q" value="{{ search }}" placeholder="Name, email or roll no."><button class="secondary">Search</button></form>
+<table>
+  <tr><th>Name</th><th>Roll no.</th><th>Email</th><th>Current internship</th></tr>
+  {% for s in students %}{% set cur = s.current_internship %}
+  <tr><td><a href="{{ url_for('staff.student_detail', student_id=s.id) }}">{{ s.name }}</a></td><td>{{ s.roll_number or '—' }}</td><td>{{ s.email }}</td>
+      <td>{{ cur.company.name ~ ' · ' ~ cur.title if cur else '—' }}</td></tr>
+  {% else %}<tr><td colspan="4" class="muted">No students found.</td></tr>{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% from "_macros.html" import csrf %}{% block title %}Companies{% endblock %}
+{% block content %}
+<h1>Companies</h1>
+<table>
+  <tr><th>Name</th><th>Website</th><th>HR/Managers</th><th>Internships</th></tr>
+  {% for c in companies %}
+  <tr><td>{{ c.name }}</td><td>{% if c.website %}<a href="{{ c.website }}" rel="noopener">{{ c.website }}</a>{% endif %}</td>
+      <td>{{ c.staff|map(attribute='name')|join(', ') or '—' }}</td><td>{{ c.internships|length }}</td></tr>
+  {% else %}<tr><td colspan="4" class="muted">No companies yet.</td></tr>{% endfor %}
+</table>
+<h2>Add company</h2>
+<form class="stack card" method="post">{{ csrf() }}
+  <label>Name <input name="name" required></label>
+  <label>Website <input name="website" type="url" placeholder="https://"></label>
+  <label>Address <input name="address"></label>
+  <button>Add company</button>
+</form>
+{% endblock %}

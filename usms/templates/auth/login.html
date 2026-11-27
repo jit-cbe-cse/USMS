@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:3rem auto">
+  <h1>Log in</h1>
+  <form class="stack" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Email <input type="email" name="email" required autofocus></label>
+    <label>Password <input type="password" name="password" required></label>
+    <label class="row"><input type="checkbox" name="remember"> Remember me</label>
+    <button>Log in</button>
+  </form>
+</div>
+{% endblock %}

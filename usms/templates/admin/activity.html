@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Activity{% endblock %}
+{% block content %}
+<h1>User activity</h1>
+{% with recent = logs.items %}{% include "admin/_activity_table.html" %}{% endwith %}
+<p class="row">
+  {% if logs.has_prev %}<a href="{{ url_for('admin.activity', page=logs.prev_num) }}">← Newer</a>{% endif %}
+  <span class="muted">Page {{ logs.page }} of {{ logs.pages or 1 }}</span>
+  {% if logs.has_next %}<a href="{{ url_for('admin.activity', page=logs.next_num) }}">Older →</a>{% endif %}
+</p>
+{% endblock %}
