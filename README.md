@@ -166,4 +166,11 @@ PRs are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code of
 
 ## License
 
-[MIT](LICENCE.md)
+USMS is free software, licensed under the **GNU Affero General Public License v3.0**. See [LICENSE](LICENSE).
+
+In plain terms:
+- You may use, study, modify and share USMS, including at your own college or company.
+- If you distribute a modified version **or run one as a web service for others**, you must release your full source code under the same AGPL-3.0 license.
+- You can't take USMS, close the source and sell or host it as a proprietary product.
+
+This summary is not legal advice; the [LICENSE](LICENSE) text is what applies.
