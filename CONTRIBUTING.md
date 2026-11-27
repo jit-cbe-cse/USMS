@@ -56,6 +56,10 @@ pytest
 - CI runs the test suite on every PR, and it must pass.
 - A maintainer will review it. Please be patient and responsive to feedback.
 
+## License of contributions
+
+USMS is licensed under [AGPL-3.0](LICENSE). By opening a pull request, you agree that your contribution is licensed under the same terms.
+
 ## Reporting bugs
 
 Open an issue with steps to reproduce, expected vs. actual behaviour, and your environment (OS, Python version, SQLite or MySQL).
